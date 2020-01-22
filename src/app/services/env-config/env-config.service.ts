@@ -45,6 +45,16 @@ export class EnvConfigService {
             }
 
           ]
+        },
+        {
+          tag: 'advtech-panel',
+          label: 'Vue Element',
+          children: [
+            {
+              tag: 'vue-widget',
+              label: 'Vue Widget'
+            }
+          ]
         }
       ]
   };
