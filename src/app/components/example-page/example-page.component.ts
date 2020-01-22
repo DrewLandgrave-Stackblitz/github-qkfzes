@@ -21,7 +21,7 @@ export class ExamplePageComponent implements OnInit {
   private buildPage() {
     this.config.mainColumn.forEach(config => {
       const panel = document.createElement(config.tag);
-      panel.panelTitle = config.panelTitle;
+      panel.panelTitle = config.label;
       config.children.forEach(childConfig => {
         const domElement = document.createElement(childConfig.tag);
         domElement.label = childConfig.label;
