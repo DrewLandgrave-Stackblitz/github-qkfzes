@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ComponentWrapperLoaderService } from '../..//services/component-wrapper-loader/component-wrapper-loader.service';
 import { PanelComponent } from '../panel/panel.component';
+import { CustomComponent } from 'src/app/interfaces/custom-component.interface';
 
 @Component({
   selector: 'advtech-wrapper',
