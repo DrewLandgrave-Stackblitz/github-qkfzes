@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ComponentWrapperLoaderService } from 'src/app/services/component-wrapper-loader/component-wrapper-loader.service';
+import { PanelComponent } from '../panel/panel.component';
 
 @Component({
   selector: 'advtech-wrapper',
@@ -7,27 +8,19 @@ import { ComponentWrapperLoaderService } from 'src/app/services/component-wrappe
   styleUrls: ['./wrapper.component.scss']
 })
 export class WrapperComponent implements OnInit {
-  @ViewChild(HTMLElement, { static: true })
-  public element: HTMLElement;
+  public element: CustomComponent;
 
   @ViewChild('insertionPoint', {read: ViewContainerRef, static: true })
   public insertionPoint: ViewContainerRef;
 
-  constructor(private componentWrapperLoaderService: ComponentWrapperLoaderService) { }
-
   ngOnInit() {
   }
 
-  loadChildren(config: any, viewContainerRef: ViewContainerRef) {
-    this.componentWrapperLoaderService.loadComponent(viewContainerRef);
-
-  }
-
   createElement(config) {
-    const element = document.createElement(config.tag);
+    this.element = document.createElement(config.tag);
 
-    element.label = config.label;
-    this.insertionPoint.element.nativeElement.append(element);
+    this.element.label = config.label;
+    this.insertionPoint.element.nativeElement.append(this.element);
 
   }
 }

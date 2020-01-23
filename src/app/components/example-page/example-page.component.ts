@@ -27,12 +27,12 @@ export class ExamplePageComponent implements OnInit {
     this.config.mainColumn.forEach(config => {
       const panel = this.componentWrapperLoaderService.loadComponent(this.mainColumn);
       panel.createElement(config);
-      // config.children.forEach(childConfig => {
-      //   const domElement = document.createElement(childConfig.tag);
-      //   domElement.label = childConfig.label;
-      //   panel.append(domElement);
-      // });
-      // document.body.append(panel);
+      config.children.forEach(childConfig => {
+        const child = this.componentWrapperLoaderService.loadComponent(panel.insertionPoint);
+        panel.element.createChild(childConfig);
+        const domElement = document.createElement(childConfig.tag);
+        domElement.label = childConfig.label;
+      });
     });
   }
 
