@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ComponentWrapperLoaderService } from '../..//services/component-wrapper-loader/component-wrapper-loader.service';
+import { PanelComponent } from '../panel/panel.component';
 
 @Component({
   selector: 'advtech-wrapper',
@@ -6,14 +8,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./wrapper.component.scss']
 })
 export class WrapperComponent implements OnInit {
-  @ViewChild(HTMLElement, { static: true })
-  public element: HTMLElement;
-  constructor(private config: string) { }
+  public element: CustomComponent;
+
+  @ViewChild('insertionPoint', {read: ViewContainerRef, static: true })
+  public insertionPoint: ViewContainerRef;
 
   ngOnInit() {
   }
 
-  loadChildren(config: any) {
+  createElement(config) {
+    this.element = document.createElement(config.tag);
+
+    this.element.label = config.label;
+    this.insertionPoint.element.nativeElement.append(this.element);
 
   }
 }

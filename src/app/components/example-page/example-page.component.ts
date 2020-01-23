@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { EnvConfigService } from '../../services/env-config/env-config.service';
 import { ComponentWrapperLoaderService } from '../../services/component-wrapper-loader/component-wrapper-loader.service';
 import { MainColumnDirective } from '../../directives/main-column/main-column.directive';
@@ -11,7 +11,12 @@ import { MainColumnDirective } from '../../directives/main-column/main-column.di
 export class ExamplePageComponent implements OnInit {
   config: any;
 
-  constructor(private envConfigService: EnvConfigService) { }
+  @ViewChild('mainColumn', { read: ViewContainerRef, static: true })
+  mainColumn: ViewContainerRef;
+
+  constructor(
+    private envConfigService: EnvConfigService,
+    private componentWrapperLoaderService: ComponentWrapperLoaderService) { }
 
   ngOnInit() {
     this.config = this.envConfigService.getConfig();
@@ -20,14 +25,14 @@ export class ExamplePageComponent implements OnInit {
 
   private buildPage() {
     this.config.mainColumn.forEach(config => {
-      const panel = document.createElement(config.tag);
-      panel.panelTitle = config.label;
+      const panel = this.componentWrapperLoaderService.loadComponent(this.mainColumn);
+      panel.createElement(config);
       config.children.forEach(childConfig => {
+        const child = this.componentWrapperLoaderService.loadComponent(panel.insertionPoint);
+        panel.element.createChild(childConfig);
         const domElement = document.createElement(childConfig.tag);
         domElement.label = childConfig.label;
-        panel.append(domElement);
       });
-      document.body.append(panel);
     });
   }
 

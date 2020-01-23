@@ -7,7 +7,7 @@ import { WrapperComponent } from '../..//components/wrapper/wrapper.component';
 export class ComponentWrapperLoaderService {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
-  loadComponent(viewContainerRef: ViewContainerRef, config: any): WrapperComponent {
+  loadComponent(viewContainerRef: ViewContainerRef): WrapperComponent {
       const factory = this.componentFactoryResolver.resolveComponentFactory(WrapperComponent);
       const componentRef = viewContainerRef.createComponent(factory);
       const instance: WrapperComponent = componentRef.instance;

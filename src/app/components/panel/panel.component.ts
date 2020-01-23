@@ -1,12 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
   selector: 'advtech-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit {
-  private internalPanelTitle: string;
+export class PanelComponent implements OnInit, ComponentBuilder {
+  
+  @ViewChild('insertionPoint', { read: ViewContainerRef, static: true })
+  @Input() public insertionPoint: ViewContainerRef;
+
+  @Input() label = '';
+
   constructor() {
   }
 
@@ -14,16 +19,10 @@ export class PanelComponent implements OnInit {
   }
 
   @Input()
-  set panelTitle(title: string) {
-    this.internalPanelTitle = title;
-  }
+  createChild(config) {
+    const element = document.createElement(config.tag);
 
-  get panelTitle(): string {
-    return this.internalPanelTitle;
-  }
-
-  @Input()
-  doFoo() {
-    console.log('we did it');
+    element.label = config.label;
+    this.insertionPoint.element.nativeElement.append(element);
   }
 }
