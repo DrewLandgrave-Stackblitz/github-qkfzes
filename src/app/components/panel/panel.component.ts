@@ -14,11 +14,11 @@ export class PanelComponent implements OnInit {
   }
 
   @Input()
-  set panelTitle(title: string) {
+  set label(title: string) {
     this.internalPanelTitle = title;
   }
 
-  get panelTitle(): string {
+  get label(): string {
     return this.internalPanelTitle;
   }
 
